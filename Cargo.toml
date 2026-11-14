@@ -1,0 +1,25 @@
+[package]
+name = "hogspasm"
+version = "1.7.0"
+edition = "2021"
+license = "ISC"
+description = "An FL Studio extension that spasms random popups of hogs"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+nih_plug = { git = "https://github.com/robbert-vdh/nih-plug.git" }
+nih_plug_iced = { git = "https://github.com/robbert-vdh/nih-plug.git" }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "bmp"] }
+parking_lot = "0.12"
+rand = "0.8"
+windows-sys = { version = "0.59", features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Gdi",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Registry",
+    "Win32_Security",
+    "Win32_System_Threading",
+    "Win32_UI_WindowsAndMessaging",
+] }
