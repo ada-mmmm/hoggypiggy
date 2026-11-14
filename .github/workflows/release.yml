@@ -24,8 +24,19 @@ jobs:
         shell: pwsh
         run: ./package.ps1 -Out dist
 
+      - name: Build installer exe
+        run: cargo build --release --manifest-path installer/Cargo.toml
+
+      - name: Stage installer
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+          Copy-Item installer/target/release/hog_installer.exe dist/HogSpasmInstaller.exe -Force
+
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/HogSpasm.vst3.zip
+          files: |
+            dist/HogSpasm.vst3.zip
+            dist/HogSpasmInstaller.exe
           fail_on_unmatched_files: true

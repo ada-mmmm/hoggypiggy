@@ -1,4 +1,5 @@
 /target
+/installer/target
 /dist
 /HogSpasm.vst3
 *.zip

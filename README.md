@@ -93,21 +93,23 @@ hogs. Transparency in PNGs is flattened onto the popup background. Pictures
 dropped into `Pictures\HogSpasm` are picked up on a fresh spawn once the
 current cache is empty.
 
-## Install (from GitHub — one line)
+## Install (from GitHub)
 
-On any Windows machine with FL Studio, run this in PowerShell:
+**Option A — double-click installer:** grab `HogSpasmInstaller.exe` from the
+[releases page](https://github.com/ada-mmmm/hoggypiggy/releases) and run it.
+It downloads the latest bundle (11 MB: plugin, 42 hog pictures, sounds,
+machine, decor), unpacks, and installs — asking for admin if the system VST3
+folder needs it, otherwise installing per-user. (The exe is unsigned, so
+SmartScreen may ask once — "More info > Run anyway".)
+
+**Option B — one line, zero prompts after that:** in PowerShell:
 
 ```powershell
 irm https://raw.githubusercontent.com/ada-mmmm/hoggypiggy/main/install_from_github.ps1 | iex
 ```
 
-That's it — the installer downloads the latest release (plugin, 42 hog
-pictures, sounds, notification machine, decor, all built in), installs it,
-and the herd does the rest. Or double-click `hog_installer.bat` /
-`install_from_github.ps1` from the repo.
-
 Releases are built automatically by GitHub Actions: push a tag like `v1.7.1`
-and the zip is published at
+and both the zip and the installer exe are published at
 `https://github.com/ada-mmmm/hoggypiggy/releases` a few minutes later.
 
 ## Install (from source / locally)
