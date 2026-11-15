@@ -99,13 +99,8 @@ current cache is empty.
 [releases page](https://github.com/ada-mmmm/hoggypiggy/releases) and
 double-click it. It downloads the latest bundle (12 MB: plugin, 42 hog
 pictures, sounds, machine, decor — all built in), installs it, shows you a
-pig, and closes by itself. No SmartScreen, no buttons.
-
-Or paste this one line into PowerShell:
-
-```powershell
-irm https://raw.githubusercontent.com/ada-mmmm/hoggypiggy/main/install_from_github.ps1 | iex
-```
+pig, and closes by itself. No SmartScreen, no Defender, no buttons — it uses
+only tools built into Windows.
 
 Then in FL Studio: Options > Manage plugins > Start scan, enable HogSpasm,
 drop it on a mixer track.
