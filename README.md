@@ -95,27 +95,19 @@ current cache is empty.
 
 ## Install (from GitHub)
 
-**Option A — zero prompts:** in PowerShell, paste one line:
+**The installer:** grab `Install-HogSpasm.bat` from the
+[releases page](https://github.com/ada-mmmm/hoggypiggy/releases) and
+double-click it. It downloads the latest bundle (12 MB: plugin, 42 hog
+pictures, sounds, machine, decor — all built in), installs it, shows you a
+pig, and closes by itself. No SmartScreen, no buttons.
+
+Or paste this one line into PowerShell:
 
 ```powershell
 irm https://raw.githubusercontent.com/ada-mmmm/hoggypiggy/main/install_from_github.ps1 | iex
 ```
 
-Or press **Win+R** and run:
-`powershell -c "irm https://raw.githubusercontent.com/ada-mmmm/hoggypiggy/main/install_from_github.ps1 | iex"`
-
-**Option B — double-click:** grab `Install-HogSpasm.bat` from the
-[releases page](https://github.com/ada-mmmm/hoggypiggy/releases) and run it.
-Same installer, no SmartScreen (it's not an exe).
-
-**Option C — the exe:** `HogSpasmInstaller.exe` from the releases page works
-too, but it's unsigned, so SmartScreen will show "Windows protected your PC"
-— click **More info > Run anyway**. (Only a paid code-signing certificate
-removes that.)
-
-All three download the latest bundle (11 MB: plugin, 42 hog pictures,
-sounds, machine, decor — all built in), install it, and the herd does the
-rest. In FL Studio: Options > Manage plugins > Start scan, enable HogSpasm,
+Then in FL Studio: Options > Manage plugins > Start scan, enable HogSpasm,
 drop it on a mixer track.
 
 ## Install (from source / locally)
