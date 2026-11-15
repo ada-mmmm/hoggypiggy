@@ -32,6 +32,7 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force dist | Out-Null
           Copy-Item installer/target/release/hog_installer.exe dist/HogSpasmInstaller.exe -Force
+          Copy-Item Install-HogSpasm.bat dist/Install-HogSpasm.bat -Force
 
       - name: Create release
         uses: softprops/action-gh-release@v2
@@ -39,4 +40,5 @@ jobs:
           files: |
             dist/HogSpasm.vst3.zip
             dist/HogSpasmInstaller.exe
+            dist/Install-HogSpasm.bat
           fail_on_unmatched_files: true
