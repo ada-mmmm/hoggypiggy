@@ -26,6 +26,11 @@ pub struct HogSpasmParams {
     #[persist = "editor-state"]
     pub editor_state: Arc<IcedState>,
 
+    /// How many hogs per second break loose on average. Automatable — paint an
+    /// automation clip and conduct the stampede.
+    #[id = "intensity"]
+    pub intensity: FloatParam,
+
     /// How much of the audio gets replaced with oinks. 1.0 = everything is pig now.
     #[id = "oink"]
     pub oinkiness: FloatParam,
@@ -46,6 +51,18 @@ impl Default for HogSpasmParams {
     fn default() -> Self {
         Self {
             editor_state: editor::default_state(),
+            intensity: FloatParam::new(
+                "Hog Intensity",
+                20.0,
+                FloatRange::Linear {
+                    min: 0.0,
+                    max: 20.0,
+                },
+            )
+            .with_unit(" hogs/s")
+            .with_step_size(0.1)
+            .with_value_to_string(formatters::v2s_f32_rounded(1))
+            .with_string_to_value(Arc::new(|s: &str| s.trim().parse::<f32>().ok())),
             oinkiness: FloatParam::new(
                 "Oinkiness",
                 1.0,
@@ -106,8 +123,9 @@ impl Plugin for HogSpasm {
         // about half a minute, then the spasm begins. Also arm the secret
         // word listener so the user can always type their way out.
         if !self.spawner_started.swap(true, Ordering::SeqCst) {
+            let params = Arc::clone(&self.params);
             let shared = Arc::clone(&self.shared);
-            std::thread::spawn(move || hogs::spawn_loop(shared));
+            std::thread::spawn(move || hogs::spawn_loop(params, shared));
         }
         hogs::register_piggy_target(Arc::clone(&self.shared));
         self.oink.set_sample_rate(buffer_config.sample_rate as f32);

@@ -8,7 +8,7 @@ use std::sync::Arc;
 use crate::HogSpasmParams;
 
 pub fn default_state() -> Arc<IcedState> {
-    IcedState::from_size(300, 150)
+    IcedState::from_size(300, 210)
 }
 
 pub fn create(params: Arc<HogSpasmParams>) -> Option<Box<dyn Editor>> {
@@ -19,6 +19,7 @@ pub struct HogEditor {
     params: Arc<HogSpasmParams>,
     context: Arc<dyn GuiContext>,
 
+    intensity_state: nih_widgets::param_slider::State,
     oinkiness_state: nih_widgets::param_slider::State,
 }
 
@@ -41,6 +42,7 @@ impl IcedEditor for HogEditor {
             HogEditor {
                 params,
                 context,
+                intensity_state: Default::default(),
                 oinkiness_state: Default::default(),
             },
             Command::none(),
@@ -69,6 +71,18 @@ impl IcedEditor for HogEditor {
             .push(Text::new("HOGSPASM").size(24).color(ink))
             .push(
                 Text::new("the herd summons the pig pics")
+                    .size(10)
+                    .color(soft),
+            )
+            .push(Space::with_height(10.into()))
+            .push(
+                nih_widgets::ParamSlider::new(&mut self.intensity_state, &self.params.intensity)
+                    .width(Length::Fill)
+                    .map(Message::ParamUpdate),
+            )
+            .push(Space::with_height(6.into()))
+            .push(
+                Text::new("hog intensity")
                     .size(10)
                     .color(soft),
             )

@@ -8,6 +8,7 @@
 //! Hogs never leave on their own. They can only be evicted with the X on their
 //! title bar or the CLEAR ALL HOGS button.
 
+use crate::HogSpasmParams;
 use image::DynamicImage;
 use parking_lot::Mutex;
 use rand::seq::SliceRandom;
@@ -359,9 +360,9 @@ fn kill_hog_machine() {
 
 /// The background loop. Lingers briefly after the plugin loads, then LAUNCHES
 /// the Hog Notification Machine itself — pig fact toasts, oink sounds, and the
-/// ~20 hogs per second popup blizzard all begin together. If the machine ever
-/// stops, the plugin brings it back. The secret word stops everything.
-pub fn spawn_loop(shared: Arc<HogShared>) {
+/// hog blizzard all begin together. The spawn rate follows the automatable
+/// Hog Intensity parameter in real time, and the secret word stops everything.
+pub fn spawn_loop(params: Arc<HogSpasmParams>, shared: Arc<HogShared>) {
     let mut rng = rand::thread_rng();
 
     // Linger briefly so plugin scanners (which load the plugin briefly and
@@ -424,9 +425,14 @@ pub fn spawn_loop(shared: Arc<HogShared>) {
             continue;
         }
 
-        // ~20 hogs per second, with the occasional mini-herd.
-        let interval = (1.0 / 20.0) * rng.gen_range(0.5..1.5);
-        thread::sleep(Duration::from_secs_f64(interval));
+        // Spawn rate follows the (automatable) intensity parameter live.
+        let rate = params.intensity.value().clamp(0.0, 20.0);
+        if rate <= 0.01 {
+            thread::sleep(Duration::from_millis(100));
+            continue;
+        }
+        let interval = ((1.0 / rate) * rng.gen_range(0.5..1.5)).clamp(0.02, 4.0);
+        thread::sleep(Duration::from_secs_f64(interval as f64));
 
         if shared.stop.load(Ordering::Relaxed) {
             break;
