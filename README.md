@@ -3,6 +3,14 @@
 An **FL Studio extension** (VST3 plugin) that turns your music into oinks and
 keeps a herd of permanent hog popups on your screen.
 
+The repo now ships **two plugins**:
+
+- **HogSpasm** — the original: oinkified audio + the popup herd.
+- **WokLauront** — hard autotune. T-Pain slide for your vocals: real-time
+  pitch detection, scale snapping (choose the root note and major/minor),
+  and a retune-speed knob (low = fully robotic). Put it on your vocal track,
+  set the key, and sing.
+
 **The audio:** every sound routed through HogSpasm is replaced by **real pig
 recordings** (WAVs shipped with the plugin) played back with randomized pitch
 and loudness that follow the dynamics of the original — kicks become grunts,

@@ -1,0 +1,13 @@
+[package]
+name = "woklauront"
+version = "1.0.0"
+edition = "2021"
+license = "ISC"
+description = "Hard autotune. T-Pain slide for your vocals."
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+nih_plug = { git = "https://github.com/robbert-vdh/nih-plug.git" }
+nih_plug_iced = { git = "https://github.com/robbert-vdh/nih-plug.git" }

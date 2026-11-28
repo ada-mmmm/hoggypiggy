@@ -1,6 +1,9 @@
+[workspace]
+members = ["woklauront"]
+
 [package]
 name = "hogspasm"
-version = "1.8.0"
+version = "1.8.1"
 edition = "2021"
 license = "ISC"
 description = "An FL Studio extension that spasms random popups of hogs"

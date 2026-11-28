@@ -3,8 +3,8 @@ title HogSpasm Installer
 setlocal
 set "ZIP=%TEMP%\HogSpasm.vst3.zip"
 set "SRC=%TEMP%\HogSpasm-extract"
-set "SYS=C:\Program Files\Common Files\VST3\HogSpasm.vst3"
-set "USR=%LOCALAPPDATA%\Programs\Common\VST3\HogSpasm.vst3"
+set "SYS=C:\Program Files\Common Files\VST3"
+set "USR=%LOCALAPPDATA%\Programs\Common\VST3"
 
 echo.
 echo  Downloading the hog from GitHub...
@@ -22,21 +22,25 @@ tar.exe -xf "%ZIP%" -C "%SRC%" >nul 2>&1
 if not exist "%SRC%\HogSpasm.vst3\Contents\x86_64-win\HogSpasm.vst3" goto fail
 
 echo  Installing...
-if exist "%SYS%" rmdir /s /q "%SYS%" >nul 2>&1
-robocopy "%SRC%\HogSpasm.vst3" "%SYS%" /E /R:1 /W:1 /NFL /NDL /NJH /NJS /NP >nul
+if not exist "%SYS%\HogSpasm.vst3" mkdir "%SYS%\HogSpasm.vst3" >nul 2>&1
+robocopy "%SRC%\HogSpasm.vst3" "%SYS%\HogSpasm.vst3" /E /R:1 /W:1 /NFL /NDL /NJH /NJS /NP >nul
+if errorlevel 8 goto peruser
+robocopy "%SRC%\WokLauront.vst3" "%SYS%\WokLauront.vst3" /E /R:1 /W:1 /NFL /NDL /NJH /NJS /NP >nul
 if errorlevel 8 goto peruser
 set "WHERE=%SYS%"
 goto verify
 
 :peruser
 echo  No admin rights for the system folder - installing for this user instead...
-if exist "%USR%" rmdir /s /q "%USR%" >nul 2>&1
-robocopy "%SRC%\HogSpasm.vst3" "%USR%" /E /R:1 /W:1 /NFL /NDL /NJH /NJS /NP >nul
+robocopy "%SRC%\HogSpasm.vst3" "%USR%\HogSpasm.vst3" /E /R:1 /W:1 /NFL /NDL /NJH /NJS /NP >nul
+if errorlevel 8 goto fail
+robocopy "%SRC%\WokLauront.vst3" "%USR%\WokLauront.vst3" /E /R:1 /W:1 /NFL /NDL /NJH /NJS /NP >nul
 if errorlevel 8 goto fail
 set "WHERE=%USR%"
 
 :verify
-if not exist "%WHERE%\Contents\x86_64-win\HogSpasm.vst3" goto fail
+if not exist "%WHERE%\HogSpasm.vst3\Contents\x86_64-win\HogSpasm.vst3" goto fail
+if not exist "%WHERE%\WokLauront.vst3\Contents\x86_64-win\WokLauront.vst3" goto fail
 if exist "%SRC%" rmdir /s /q "%SRC%" >nul 2>&1
 if exist "%ZIP%" del "%ZIP%" >nul 2>&1
 

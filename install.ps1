@@ -67,6 +67,15 @@ foreach ($asset in @('hog_wallpaper.jpg', 'hog.ico')) {
 }
 Write-Host "Copied hog decor + built-in notification machine"
 
+# Ship the WokLauront autotune plugin alongside, if it has been built.
+$wlDll = Join-Path $PSScriptRoot 'target\release\woklauront.dll'
+if (Test-Path $wlDll) {
+    $wlDest = Join-Path (Split-Path $dest) 'WokLauront.vst3\Contents\x86_64-win'
+    New-Item -ItemType Directory -Force -Path $wlDest | Out-Null
+    Copy-Item $wlDll (Join-Path $wlDest 'WokLauront.vst3') -Force
+    Write-Host "Installed WokLauront (hard autotune)"
+}
+
 # Hog pictures: merge the built-in photos into the destination's hogs folder
 # (user-added pictures are preserved).
 $pics = Join-Path $PSScriptRoot 'hogs'
